@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniMarketplace</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --indigo: #6368E8;
+      --indigo-dark: #4F54D2;
+      --indigo-light: #EEF0FD;
+      --text: #1F2A44;
+      --muted: #60728F;
+      --border: #DDE1EC;
+      --bg: #F4F5FA;
+      --white: #FFFFFF;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--indigo);
+      letter-spacing: -0.3px;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--indigo); }
+
+    /* HERO */
+    .hero {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 80px 24px 64px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--indigo-light);
+      color: var(--indigo);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--indigo); }
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,104,232,0.2); }
+    .btn-primary { background: var(--indigo); color: var(--white); }
+    .btn-secondary {
+      background: var(--white);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    /* VIDEO */
+    .video-section {
+      max-width: 860px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+    }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 24px 64px rgba(30,41,80,0.14);
+      border: 1px solid var(--border);
+    }
+    .video-wrap video {
+      width: 100%;
+      display: block;
+      max-height: 540px;
+      object-fit: contain;
+      background: #000;
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 860px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+    }
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--indigo-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+    .card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+    /* STACK */
+    .stack-section {
+      max-width: 860px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+    }
+    .stack-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .tag {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* REPOS */
+    .repos {
+      max-width: 860px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+    }
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .repo-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .repo-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(30,41,80,0.1); }
+    .repo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--indigo-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .repo-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .repo-info p { font-size: 13px; color: var(--muted); }
+    .repo-arrow { margin-left: auto; color: var(--muted); font-size: 18px; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 56px 20px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">UniMarketplace</span>
+    <div class="nav-links">
+      <a href="#demo">Demo</a>
+      <a href="#features">Features</a>
+      <a href="#stack">Stack</a>
+      <a href="#repos">Code</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge">Senior Project &middot; 2026</div>
+    <h1>The marketplace<br/>built for <span>campus life</span></h1>
+    <p>Buy and sell within your college community — verified by your .edu email, scoped to your campus.</p>
+    <div class="hero-btns">
+      <a href="#demo" class="btn btn-primary">&#9654;&nbsp; Watch Demo</a>
+      <a href="#repos" class="btn btn-secondary">&#128196;&nbsp; View Code</a>
+      <a href="https://docs.google.com/presentation/d/1SUyJL9mTgQ-E9l23zofzwhfg65fVnyKg/edit?usp=share_link&ouid=107803416737341243612&rtpof=true&sd=true" target="_blank" rel="noopener" class="btn btn-secondary">&#128202;&nbsp; Presentation</a>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="video-section" id="demo">
+    <div class="video-wrap">
+      <video controls playsinline poster="">
+        <source src="demo.mov" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="section-label">What it does</p>
+    <h2 class="section-title">Everything a campus marketplace needs</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <h3>.edu Verification</h3>
+        <p>Sign up with your college email. OTP verification ensures only real students can access the platform.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏪</div>
+        <h3>Campus-Scoped Feed</h3>
+        <p>Every listing you see is from a student at your school. No noise from other campuses.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>In-App Messaging</h3>
+        <p>Chat directly with buyers or sellers without sharing personal contact info.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>Post Listings</h3>
+        <p>Upload photos, set a price, pick a category and condition — live in under a minute.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Search & Filter</h3>
+        <p>Filter by category, condition, and price. Sort low to high or high to low.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📦</div>
+        <h3>Move-Out Mode</h3>
+        <p>End-of-semester bulk selling mode for students clearing out their dorms fast.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack-section" id="stack">
+    <p class="section-label">Tech Stack</p>
+    <h2 class="section-title">Built with modern tools</h2>
+    <div class="stack-grid">
+      <span class="tag">React Native</span>
+      <span class="tag">Expo</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">Express</span>
+      <span class="tag">Supabase</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">Supabase Storage</span>
+      <span class="tag">EAS Build</span>
+      <span class="tag">Render</span>
+      <span class="tag">Google OAuth</span>
+      <span class="tag">Expo Router</span>
+    </div>
+  </section>
+
+  <!-- REPOS -->
+  <section class="repos" id="repos">
+    <p class="section-label">Source Code</p>
+    <h2 class="section-title">Open repositories</h2>
+    <div class="repo-grid">
+      <a class="repo-card" href="https://github.com/ShaurabhGhimire/unimarketplace" target="_blank" rel="noopener">
+        <div class="repo-icon">📱</div>
+        <div class="repo-info">
+          <h3>Frontend</h3>
+          <p>React Native &middot; Expo &middot; TypeScript</p>
+        </div>
+        <span class="repo-arrow">↗</span>
+      </a>
+      <a class="repo-card" href="https://github.com/Philemon-a/unimarketplace-backend" target="_blank" rel="noopener">
+        <div class="repo-icon">⚙️</div>
+        <div class="repo-info">
+          <h3>Backend</h3>
+          <p>Node.js &middot; Express &middot; Supabase</p>
+        </div>
+        <span class="repo-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    UniMarketplace &mdash; Built for campus communities &middot; 2026
+  </footer>
+
+</body>
+</html>
